@@ -1,5 +1,6 @@
 package recurssionproblems;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 // Find sum of first n natural numbers
@@ -198,7 +199,7 @@ public class Recurssion {
 
 	}
 	// Print all permutations of the Sring
-	//"abc" => "abc", "acb", "bac", "bca", "cab", "cba", "bc", "ca", "ab", 
+	//"abc" => "abc", "acb", "bac", "bca", "cab", "cba" 
 
 		public static void strPermutaion(String str, String permutation) {
 			if (str.length()==0) {
@@ -214,6 +215,75 @@ public class Recurssion {
 			}
 
 		}
+		
+		// Find all paths in a maze to move from (0,0) to (n,m)
+		// n=3, m=3; consitions- 1) you can only move to right 2) you can only move downwards
+
+			public static int allPaths(int i, int j, int n, int m) {
+				if (i == n || j == m){
+					return 0;
+				}
+				if (i == n-1 && j == m-1){
+					return 1;
+				}
+				//move downward
+				int downPaths = allPaths(i+1, j, n, m);
+				//move right
+				int rightpaths = allPaths(i, j+1, n, m);
+				
+				return downPaths+rightpaths;
+			}
+			
+	//Place tiles of size 1 * m in a floor of size n*m;
+			public static int placeTiles(int n, int m) {
+				if(n==m) {
+					return 2;
+				}
+				if(n<m) {
+					return 1;
+				}
+				//vertical placement
+				int verticalPlacement =  placeTiles(n-m, m);
+				//horizontal placement
+				int horizontalPlacement = placeTiles(n-1, m);
+				
+				return verticalPlacement + horizontalPlacement;
+			}
+			
+	//Find number of ways in whichh you can invite n number of peoplpe single or in pairs
+		public static int invitePpl(int n) {
+		if(n<=1) {
+			return 1;
+		}
+			//invite one person each
+		int singleGuest = invitePpl(n-1);
+			// invite in pairs
+		int pairGuest = (n-1) * invitePpl(n-2);
+		return singleGuest + pairGuest;	
+		
+		}
+
+	// Print all subset of a set of n natural numbers
+		private static void printSubset(ArrayList<Integer> subset) {
+			for(int i=0; i<subset.size(); i++) {
+				System.out.print(subset.get(i)+ " ");
+			}
+			System.out.println();
+		}
+		public static void subSets(int n, ArrayList<Integer> subset) {
+		if(n==0) {
+			printSubset(subset);
+			return;
+		}
+		//add
+		subset.add(n);
+		subSets(n-1, subset);
+		//not to add
+		subset.remove(subset.size()-1);
+		subSets(n-1, subset);
+	}
+			
+			
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -270,9 +340,27 @@ public class Recurssion {
 //		keypadCombo(str, 0, "");
 
 //		Print all permutation of the string
-		String str = "abc";
-		strPermutaion(str, "");
+//		String str = "abc";
+//		strPermutaion(str, "");
 		
+		//Count all paths from (0,0) to (n,m)
+//		int n =4;
+//		int m=4;
+//		System.out.println(allPaths(0, 0, n, m));
+		
+		//Place tiles of size 1 * m in a floor of size n*m;
+//		int n = 6;
+//		int m =5;
+//		System.out.println(placeTiles(n, m));
+		
+		//number of ways in whichh you can invite n number of peoplpe single or in pairs
+//		int n = 4;
+//		System.out.println(invitePpl(n));
+		
+		// Print all subset of a set of n natural numbers
+		int n =3;
+		ArrayList<Integer> subset = new ArrayList<Integer>();
+		subSets(3, subset);
 	}
 
 }
